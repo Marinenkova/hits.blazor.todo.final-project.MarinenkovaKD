@@ -1,0 +1,17 @@
+﻿@page "/"
+@using FinalProject.Services
+@inject CourseService CourseService
+
+
+<PageTitle>Курсы</PageTitle>
+
+<h1>МОИ КУРСЫ</h1>
+
+<ul>
+    @foreach (var course in CourseService.GetCourses())
+    {
+        <li>
+            <a href="@($"/course/{course.Id}")">@course.Title</a> - @course.Description
+        </li>
+    }
+</ul>

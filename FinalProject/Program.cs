@@ -1,9 +1,11 @@
 using FinalProject.Components;
 using FinalProject.Components.Account;
 using FinalProject.Data;
+using FinalProject.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace FinalProject
 {
@@ -11,6 +13,7 @@ namespace FinalProject
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -67,6 +70,10 @@ namespace FinalProject
             app.MapAdditionalIdentityEndpoints();
 
             app.Run();
+
+            
+            builder.Services.AddScoped<CourseService>();
+
         }
     }
 }

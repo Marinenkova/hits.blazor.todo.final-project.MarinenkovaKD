@@ -1,0 +1,20 @@
+﻿@page "/course/{courseId:int}"
+@using FinalProject.Services
+@inject CourseService CourseService
+
+<h3>Курс</h3>
+
+@code {
+    [Parameter]
+    public int courseId { get; set; }
+
+    private Course course;
+
+    public Course(Course course)
+    {
+        this.course = course;
+    }
+
+    
+}
+
