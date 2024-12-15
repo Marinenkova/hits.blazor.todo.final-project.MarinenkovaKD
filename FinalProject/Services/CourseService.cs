@@ -45,7 +45,7 @@ public class CourseService
 
     public Course GetCourse(int id) => courses.FirstOrDefault(c => c.Id == id);
 
-    public Lesson GetLesson(int courseId, int lessonId)
+    public Lesson? GetLesson(int courseId, int lessonId)
     {
         var course = GetCourse(courseId);
         return course?.Lessons.FirstOrDefault(l => l.Id == lessonId);
