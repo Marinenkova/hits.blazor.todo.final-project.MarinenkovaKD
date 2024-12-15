@@ -1,6 +1,6 @@
 ﻿namespace FinalProject.Models
 {
-    internal class Lesson
+    public class Lesson
     {
         public int Id { get; set; }
         public string? Title { get; set; }

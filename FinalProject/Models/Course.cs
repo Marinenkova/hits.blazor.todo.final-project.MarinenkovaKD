@@ -1,4 +1,6 @@
-﻿namespace FinalProject.Models
+﻿using System.Collections.Generic;
+using FinalProject.Models;
+namespace FinalProject.Models
 {
     public class Course
     {
@@ -7,4 +9,6 @@
         public string? Description { get; set; }
         public List<Lesson> Lessons { get; set; } = new List<Lesson>();
     }
+
+
 }
