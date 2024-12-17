@@ -1,7 +1,6 @@
 using FinalProject.Components;
 using FinalProject.Components.Account;
 using FinalProject.Data;
-using FinalProject.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -70,9 +69,6 @@ namespace FinalProject
             app.MapAdditionalIdentityEndpoints();
 
             app.Run();
-
-            
-            builder.Services.AddScoped<CourseService>();
 
         }
     }

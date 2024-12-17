@@ -1,17 +1,89 @@
 ﻿@page "/"
-@using FinalProject.Services
-@inject CourseService CourseService
+@using FinalProject.Lesson
 
+<h3>@lesson.Title</h3>
+<p>@lesson.Content</p>
 
-<PageTitle>Курсы</PageTitle>
-
-<h1>МОИ КУРСЫ</h1>
-
-<ul>
-    @foreach (var course in CourseService.GetCourses())
+@if (showTest)
+{
+    <h4>Тест</h4>
+    @foreach (var question in lesson.Questions)
     {
-        <li>
-            <a href="@($"/course/{course.Id}")">@course.Title</a> - @course.Description
-        </li>
+        <div>
+            <p>@question.Text</p>
+            @for (int i = 0; i < question.Answers.Count; i++)
+            {
+                <div>
+                    <input type="radio" name="@question.Text" value="@i" @onchange="(e) => RecordAnswer(question, i)" />
+                    @question.Answers[i]
+                </div>
+            }
+        </div>
     }
-</ul>
+    <button @onclick="SubmitTest">Отправить тест</button>
+}
+
+@if (result != null)
+{
+    <h4>Результат: @result</h4>
+}
+
+<button @onclick="ShowTest">Начать тест</button>
+
+@code {
+    private Lesson lesson = new Lesson
+        {
+            Title = "Введение в Blazor",
+            Content = "Blazor — это фреймворк для создания интерактивных веб-приложений с помощью C#.",
+            Questions = new List<Question>
+        {
+            new Question
+            {
+                Text = "Что такое Blazor?",
+                Answers = new List<string> { "JavaScript фреймворк", "C# фреймворк", "HTML фреймворк" },
+                CorrectAnswerIndex = 1
+            },
+            new Question
+            {
+                Text = "Какой язык используется в Blazor?",
+                Answers = new List<string> { "C#", "Java", "Python" },
+                CorrectAnswerIndex = 0
+            }
+        }
+        };
+
+    private bool showTest = false;
+    private Dictionary<Question, int> userAnswers = new Dictionary<Question, int>();
+    private string result;
+
+    public Tasks(string result)
+    {
+        this.result = result;
+    }
+
+    private void ShowTest()
+    {
+        showTest = true;
+    }
+
+    private void RecordAnswer(Question question, int answerIndex)
+    {
+        userAnswers[question] = answerIndex;
+    }
+
+    private void SubmitTest()
+    {
+        int score = 0;
+        foreach (var question in lesson.Questions)
+        {
+            if (userAnswers.TryGetValue(question, out var answerIndex) && answerIndex == question.CorrectAnswerIndex)
+            {
+                score++;
+            }
+        }
+
+        result = $"Вы набрали {score} из {lesson.Questions.Count}.";
+        showTest = false;
+        userAnswers.Clear();
+    }
+}
